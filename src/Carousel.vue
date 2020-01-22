@@ -847,13 +847,13 @@ export default {
         this.offset -=
           Math.max(
             -this.currentPerPage + 1,
-            Math.min(Math.round(this.dragMomentum), this.currentPerPage - 1)
+            Math.min(this.dragMomentum, this.currentPerPage - 1)
           ) * this.slideWidth;
       } else {
         this.offset +=
           Math.max(
             -this.currentPerPage + 1,
-            Math.min(Math.round(this.dragMomentum), this.currentPerPage - 1)
+            Math.min(this.dragMomentum, this.currentPerPage - 1)
           ) * this.slideWidth;
       }
 
@@ -871,7 +871,7 @@ export default {
       if (this.offset > (lastFullPageOffset + remainderOffset) / 2) {
         this.offset = remainderOffset;
       } else {
-        this.offset = width * Math.round(this.offset / width);
+        this.offset = width * (this.offset / width);
       }
 
       // clamp the offset between 0 -> maxOffset
