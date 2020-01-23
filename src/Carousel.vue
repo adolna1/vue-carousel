@@ -178,7 +178,7 @@ export default {
      */
     touchDrag: {
       type: Boolean,
-      default: true
+      default: false
     },
     /**
      * Listen for an external navigation request using this prop.
