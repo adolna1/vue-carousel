@@ -171,7 +171,7 @@ export default {
      */
     mouseDrag: {
       type: Boolean,
-      default: true
+      default: false
     },
     /**
      * Flag to toggle touch dragging
