@@ -707,7 +707,7 @@ export default {
         }
 
         // update the current page
-        this.currentPage = page;
+        // this.currentPage = page;
 
         if (advanceType === "pagination") {
           this.pauseAutoplay();
