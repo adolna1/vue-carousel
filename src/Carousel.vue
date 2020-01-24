@@ -90,6 +90,7 @@ export default {
   },
   data() {
     return {
+      testData: true,
       browserWidth: null,
       carouselWidth: 0,
       currentPage: 0,
