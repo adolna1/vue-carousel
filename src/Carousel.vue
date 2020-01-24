@@ -918,6 +918,7 @@ export default {
     }
   },
   mounted() {
+  console.log('test')
     window.addEventListener(
       "resize",
       debounce(this.onResize, this.refreshRate)
