@@ -865,14 +865,14 @@ export default {
 
       // lock offset to either the nearest page, or to the last slide
       const lastFullPageOffset =
-        width * (this.slideCount / (this.currentPerPage - 1));
+        width * Math.floor(this.slideCount / (this.currentPerPage - 1));
       const remainderOffset =
         lastFullPageOffset +
         this.slideWidth * (this.slideCount % this.currentPerPage);
       if (this.offset > (lastFullPageOffset + remainderOffset) / 2) {
         this.offset = remainderOffset;
       } else {
-        this.offset = width * (this.offset / width);
+        this.offset = width * Math.round(this.offset / width);
       }
 
       // clamp the offset between 0 -> maxOffset
