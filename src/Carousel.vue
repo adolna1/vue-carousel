@@ -172,7 +172,7 @@ export default {
      */
     mouseDrag: {
       type: Boolean,
-      default: false
+      default: true
     },
     /**
      * Flag to toggle touch dragging
@@ -350,7 +350,7 @@ export default {
     value(val) {
       if (val !== this.currentPage) {
         this.goToPage(val);
-       // this.render();
+        // this.render();
       }
     },
     navigateTo: {
@@ -379,9 +379,9 @@ export default {
       }
     },
     currentPage(val) {
-      //this.$emit("pageChange", val);
-      //this.$emit("page-change", val);
-      //this.$emit("input", val);
+      this.$emit("pageChange", val);
+      this.$emit("page-change", val);
+      this.$emit("input", val);
     },
     autoplay(val) {
       if (val === false) {
@@ -708,7 +708,7 @@ export default {
         }
 
         // update the current page
-        // this.currentPage = page;
+        this.currentPage = page;
 
         if (advanceType === "pagination") {
           this.pauseAutoplay();
@@ -864,7 +864,7 @@ export default {
         : this.slideWidth;
 
       // lock offset to either the nearest page, or to the last slide
-     const lastFullPageOffset =
+      const lastFullPageOffset =
         width * (this.slideCount / (this.currentPerPage - 1));
       const remainderOffset =
         lastFullPageOffset +
@@ -873,13 +873,13 @@ export default {
         this.offset = remainderOffset;
       } else {
         this.offset = width * (this.offset / width);
-      } 
+      }
 
       // clamp the offset between 0 -> maxOffset
       this.offset = Math.max(0, Math.min(this.offset, this.maxOffset));
 
       // update the current page
-     /* this.currentPage = this.scrollPerPage
+      /* this.currentPage = this.scrollPerPage
         ? Math.round(this.offset / this.slideWidth / this.currentPerPage)
         : Math.round(this.offset / this.slideWidth); */
     },
@@ -918,19 +918,19 @@ export default {
     }
   },
   mounted() {
-  console.log('test')
+    console.log("test");
     window.addEventListener(
       "resize",
       debounce(this.onResize, this.refreshRate)
     );
 
     // setup the start event only if touch device or mousedrag activated
-    /*if ((this.isTouch && this.touchDrag) || this.mouseDrag) {
+    if ((this.isTouch && this.touchDrag) || this.mouseDrag) {
       this.$refs["VueCarousel-wrapper"].addEventListener(
         this.isTouch ? "touchstart" : "mousedown",
         this.onStart
       );
-    }*/
+    }
 
     this.attachMutationObserver();
     this.computeCarouselWidth();
