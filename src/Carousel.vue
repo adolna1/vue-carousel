@@ -350,7 +350,7 @@ export default {
     value(val) {
       if (val !== this.currentPage) {
         this.goToPage(val);
-        // this.render();
+        this.render();
       }
     },
     navigateTo: {
