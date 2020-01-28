@@ -1,19 +1,19 @@
 <template>
   <div
-    class="VueCarousel"
-    v-bind:class="{ 'VueCarousel--reverse': paginationPosition === 'top' }"
+          class="VueCarousel"
+          v-bind:class="{ 'VueCarousel--reverse': paginationPosition === 'top' }"
   >
     <div
-      class="VueCarousel-wrapper"
-      ref="VueCarousel-wrapper"
+            class="VueCarousel-wrapper"
+            ref="VueCarousel-wrapper"
     >
       <div
-        ref="VueCarousel-inner"
-        :class="[
+              ref="VueCarousel-inner"
+              :class="[
           'VueCarousel-inner',
           { 'VueCarousel-inner--center': isCenterModeEnabled }
         ]"
-        :style="{
+              :style="{
           'transform': `translate(${currentOffset}px, 0)`,
           'transition': dragging ? 'none' : transitionStyle,
           'ms-flex-preferred-size': `${slideWidth}px`,
@@ -31,11 +31,11 @@
 
     <slot name="navigation" v-if="navigationEnabled">
       <navigation
-        v-if="isNavigationRequired"
-        :clickTargetSize="navigationClickTargetSize"
-        :nextLabel="navigationNextLabel"
-        :prevLabel="navigationPrevLabel"
-        @navigationclick="handleNavigation"
+              v-if="isNavigationRequired"
+              :clickTargetSize="navigationClickTargetSize"
+              :nextLabel="navigationNextLabel"
+              :prevLabel="navigationPrevLabel"
+              @navigationclick="handleNavigation"
       />
     </slot>
 
@@ -50,7 +50,6 @@ import debounce from "./utils/debounce";
 import Navigation from "./Navigation.vue";
 import Pagination from "./Pagination.vue";
 import Slide from "./Slide.vue";
-
 const transitionStartNames = {
   onwebkittransitionstart: "webkitTransitionStart",
   onmoztransitionstart: "transitionstart",
@@ -77,7 +76,6 @@ const getTransitionEnd = () => {
     }
   }
 };
-
 export default {
   name: "carousel",
   beforeUpdate() {
@@ -90,7 +88,6 @@ export default {
   },
   data() {
     return {
-      testData: true,
       browserWidth: null,
       carouselWidth: 0,
       currentPage: 0,
@@ -179,7 +176,7 @@ export default {
      */
     touchDrag: {
       type: Boolean,
-      default: false
+      default: true
     },
     /**
      * Listen for an external navigation request using this prop.
@@ -361,13 +358,11 @@ export default {
           if (val[1] == false) {
             // following code is to disable animation
             this.dragging = true;
-
             // clear dragging after refresh rate
             setTimeout(() => {
               this.dragging = false;
             }, this.refreshRate);
           }
-
           this.$nextTick(() => {
             this.goToPage(val[0]);
           });
@@ -401,22 +396,17 @@ export default {
       if (!this.perPageCustom) {
         return this.perPage;
       }
-
       const breakpointArray = this.perPageCustom;
       const width = this.browserWidth;
-
       const breakpoints = breakpointArray.sort(
         (a, b) => (a[0] > b[0] ? -1 : 1)
       );
-
       // Reduce the breakpoints to entries where the width is in range
       // The breakpoint arrays are formatted as [widthToMatch, numberOfSlides]
       const matches = breakpoints.filter(breakpoint => width >= breakpoint[0]);
-
       // If there is a match, the result should return only
       // the slide count from the first matching breakpoint
       const match = matches[0] && matches[0][1];
-
       return match || this.perPage;
     },
     /**
@@ -485,7 +475,6 @@ export default {
     slideWidth() {
       const width = this.carouselWidth - this.spacePadding * 2;
       const perPage = this.currentPerPage;
-
       return width / perPage;
     },
     /**
@@ -507,7 +496,6 @@ export default {
         return `${transtion}, height ${speed} ${this.adjustableHeightEasing ||
           this.easing}`;
       }
-
       return transtion;
     },
     padding() {
@@ -551,12 +539,10 @@ export default {
     goToLastSlide() {
       // following code is to disable animation
       this.dragging = true;
-
       // clear dragging after refresh rate
       setTimeout(() => {
         this.dragging = false;
       }, this.refreshRate);
-
       this.$nextTick(() => {
         this.goToPage(this.pageCount);
       });
@@ -570,7 +556,6 @@ export default {
         window.MutationObserver ||
         window.WebKitMutationObserver ||
         window.MozMutationObserver;
-
       if (MutationObserver) {
         let config = {
           attributes: true,
@@ -644,7 +629,6 @@ export default {
       if (!this.adjustableHeight) {
         return "auto";
       }
-
       const slideOffset = this.currentPerPage * (this.currentPage + 1) - 1;
       const maxSlideHeight = [...Array(this.currentPerPage)]
         .map((_, idx) => this.getSlide(slideOffset + idx))
@@ -653,10 +637,8 @@ export default {
             Math.max(clientHeight, (slide && slide.$el.clientHeight) || 0),
           0
         );
-
       this.currentHeight =
         maxSlideHeight === 0 ? "auto" : `${maxSlideHeight}px`;
-
       return this.currentHeight;
     },
     /**
@@ -701,15 +683,12 @@ export default {
               this.maxOffset
             )
           : this.slideWidth * page;
-
         // restart autoplay if specified
         if (this.autoplay && !this.autoplayHoverPause) {
           this.restartAutoplay();
         }
-
         // update the current page
         this.currentPage = page;
-
         if (advanceType === "pagination") {
           this.pauseAutoplay();
           this.$emit("pagination-click", page);
@@ -723,24 +702,20 @@ export default {
     /* istanbul ignore next */
     onStart(e) {
       // alert("start");
-
       // detect right click
       if (e.button == 2) {
         return;
       }
-
       document.addEventListener(
         this.isTouch ? "touchend" : "mouseup",
         this.onEnd,
         true
       );
-
       document.addEventListener(
         this.isTouch ? "touchmove" : "mousemove",
         this.onDrag,
         true
       );
-
       this.startTime = e.timeStamp;
       this.dragging = true;
       this.dragStartX = this.isTouch ? e.touches[0].clientX : e.clientX;
@@ -750,19 +725,16 @@ export default {
      * Trigger actions when mouse is released
      * @param  {Object} e The event object
      */
-
     onEnd(e) {
       // restart autoplay if specified
       if (this.autoplay && !this.autoplayHoverPause) {
         this.restartAutoplay();
       }
       this.pauseAutoplay();
-
       // compute the momemtum speed
       const eventPosX = this.isTouch ? e.changedTouches[0].clientX : e.clientX;
       const deltaX = this.dragStartX - eventPosX;
       this.dragMomentum = deltaX / (e.timeStamp - this.startTime);
-
       // take care of the minSwipteDistance prop, if not 0 and delta is bigger than delta
       if (
         this.minSwipeDistance !== 0 &&
@@ -773,7 +745,6 @@ export default {
           : this.slideWidth;
         this.dragOffset = this.dragOffset + Math.sign(deltaX) * (width / 2);
       }
-
       if (this.rtl) {
         this.offset -= this.dragOffset;
       } else {
@@ -781,9 +752,7 @@ export default {
       }
       this.dragOffset = 0;
       this.dragging = false;
-
       this.render();
-
       // clear events listeners
       document.removeEventListener(
         this.isTouch ? "touchend" : "mouseup",
@@ -805,18 +774,14 @@ export default {
       const eventPosY = this.isTouch ? e.touches[0].clientY : e.clientY;
       const newOffsetX = this.dragStartX - eventPosX;
       const newOffsetY = this.dragStartY - eventPosY;
-
       // if it is a touch device, check if we are below the min swipe threshold
       // (if user scroll the page on the component)
       if (this.isTouch && Math.abs(newOffsetX) < Math.abs(newOffsetY)) {
         return;
       }
-
       e.stopImmediatePropagation();
-
       this.dragOffset = newOffsetX;
       const nextOffset = this.offset + this.dragOffset;
-
       if (this.rtl) {
         if (this.offset == 0 && this.dragOffset > 0) {
           this.dragOffset = Math.sqrt(this.resistanceCoef * this.dragOffset);
@@ -834,7 +799,6 @@ export default {
     onResize() {
       this.computeCarouselWidth();
       this.computeCarouselHeight();
-
       this.dragging = true; // force a dragging to disable animation
       this.render();
       // clear dragging after refresh rate
@@ -848,21 +812,19 @@ export default {
         this.offset -=
           Math.max(
             -this.currentPerPage + 1,
-            Math.min(this.dragMomentum, this.currentPerPage - 1)
+            Math.min(Math.round(this.dragMomentum), this.currentPerPage - 1)
           ) * this.slideWidth;
       } else {
         this.offset +=
           Math.max(
             -this.currentPerPage + 1,
-            Math.min(this.dragMomentum, this.currentPerPage - 1)
+            Math.min(Math.round(this.dragMomentum), this.currentPerPage - 1)
           ) * this.slideWidth;
       }
-
       // & snap the new offset on a slide or page if scrollPerPage
       const width = this.scrollPerPage
         ? this.slideWidth * this.currentPerPage
         : this.slideWidth;
-
       // lock offset to either the nearest page, or to the last slide
       const lastFullPageOffset =
         width * Math.floor(this.slideCount / (this.currentPerPage - 1));
@@ -874,14 +836,12 @@ export default {
       } else {
         this.offset = width * Math.round(this.offset / width);
       }
-
       // clamp the offset between 0 -> maxOffset
       this.offset = Math.max(0, Math.min(this.offset, this.maxOffset));
-
       // update the current page
-      this.currentPage = this.scrollPerPage
-        ? this.offset / this.slideWidth / this.currentPerPage
-        : this.offset / this.slideWidth;
+      /* this.currentPage = this.scrollPerPage
+                ? Math.round(this.offset / this.slideWidth / this.currentPerPage)
+                : Math.round(this.offset / this.slideWidth);*/
     },
     /**
      * Re-compute the width of the carousel and its slides
@@ -918,12 +878,10 @@ export default {
     }
   },
   mounted() {
-    console.log("test");
     window.addEventListener(
       "resize",
       debounce(this.onResize, this.refreshRate)
     );
-
     // setup the start event only if touch device or mousedrag activated
     if ((this.isTouch && this.touchDrag) || this.mouseDrag) {
       this.$refs["VueCarousel-wrapper"].addEventListener(
@@ -931,11 +889,9 @@ export default {
         this.onStart
       );
     }
-
     this.attachMutationObserver();
     this.computeCarouselWidth();
     this.computeCarouselHeight();
-
     this.transitionstart = getTransitionEnd();
     this.$refs["VueCarousel-inner"].addEventListener(
       this.transitionstart,
@@ -946,9 +902,7 @@ export default {
       this.transitionend,
       this.handleTransitionEnd
     );
-
     this.$emit("mounted");
-
     // when autoplay direction is backward start from the last slide
     if (this.autoplayDirection === "backward") {
       this.goToLastSlide();
@@ -965,7 +919,6 @@ export default {
       this.transitionend,
       this.handleTransitionEnd
     );
-
     this.$refs["VueCarousel-wrapper"].removeEventListener(
       this.isTouch ? "touchstart" : "mousedown",
       this.onStart
@@ -979,23 +932,19 @@ export default {
   flex-direction: column;
   position: relative;
 }
-
 .VueCarousel--reverse {
   flex-direction: column-reverse;
 }
-
 .VueCarousel-wrapper {
   width: 100%;
   position: relative;
   overflow: hidden;
 }
-
 .VueCarousel-inner {
   display: flex;
   flex-direction: row;
   backface-visibility: hidden;
 }
-
 .VueCarousel-inner--center {
   justify-content: center;
 }
