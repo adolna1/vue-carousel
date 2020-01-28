@@ -823,7 +823,7 @@ export default {
           ) * this.slideWidth;
       }
       // & snap the new offset on a slide or page if scrollPerPage
-      const width = this.scrollPerPage
+      /*const width = this.scrollPerPage
         ? this.slideWidth * this.currentPerPage
         : this.slideWidth;
       // lock offset to either the nearest page, or to the last slide
@@ -836,7 +836,7 @@ export default {
         this.offset = remainderOffset;
       } else {
         this.offset = width * (this.offset / width);
-      }
+      }*/
       // clamp the offset between 0 -> maxOffset
       this.offset = Math.max(0, Math.min(this.offset, this.maxOffset));
       // update the current page
