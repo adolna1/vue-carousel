@@ -88,6 +88,7 @@ export default {
   },
   data() {
     return {
+      testData: true,
       browserWidth: null,
       carouselWidth: 0,
       currentPage: 0,
@@ -176,7 +177,7 @@ export default {
      */
     touchDrag: {
       type: Boolean,
-      default: true
+      default: false
     },
     /**
      * Listen for an external navigation request using this prop.
@@ -812,13 +813,13 @@ export default {
         this.offset -=
           Math.max(
             -this.currentPerPage + 1,
-            Math.min(Math.round(this.dragMomentum), this.currentPerPage - 1)
+            Math.min(this.dragMomentum, this.currentPerPage - 1)
           ) * this.slideWidth;
       } else {
         this.offset +=
           Math.max(
             -this.currentPerPage + 1,
-            Math.min(Math.round(this.dragMomentum), this.currentPerPage - 1)
+            Math.min(this.dragMomentum, this.currentPerPage - 1)
           ) * this.slideWidth;
       }
       // & snap the new offset on a slide or page if scrollPerPage
@@ -840,8 +841,8 @@ export default {
       this.offset = Math.max(0, Math.min(this.offset, this.maxOffset));
       // update the current page
       /* this.currentPage = this.scrollPerPage
-                ? Math.round(this.offset / this.slideWidth / this.currentPerPage)
-                : Math.round(this.offset / this.slideWidth);*/
+          ? Math.round(this.offset / this.slideWidth / this.currentPerPage)
+          : Math.round(this.offset / this.slideWidth); */
     },
     /**
      * Re-compute the width of the carousel and its slides
@@ -878,6 +879,7 @@ export default {
     }
   },
   mounted() {
+    console.log("test");
     window.addEventListener(
       "resize",
       debounce(this.onResize, this.refreshRate)
