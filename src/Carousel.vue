@@ -879,9 +879,9 @@ export default {
       this.offset = Math.max(0, Math.min(this.offset, this.maxOffset));
 
       // update the current page
-      /* this.currentPage = this.scrollPerPage
-        ? Math.round(this.offset / this.slideWidth / this.currentPerPage)
-        : Math.round(this.offset / this.slideWidth); */
+      this.currentPage = this.scrollPerPage
+        ? this.offset / this.slideWidth / this.currentPerPage
+        : this.offset / this.slideWidth;
     },
     /**
      * Re-compute the width of the carousel and its slides
