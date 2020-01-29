@@ -510,7 +510,7 @@ export default {
      * */
     getNextPage() {
       if (this.currentPage < this.pageCount - 1) {
-        return this.currentPage + 1 / 13;
+        return this.currentPage + 1 / this.currentPerPage;
       }
       return this.loop ? 0 : this.currentPage;
     },
@@ -519,7 +519,7 @@ export default {
      * */
     getPreviousPage() {
       if (this.currentPage > 0) {
-        return this.currentPage - 1;
+        return this.currentPage - 1 / this.currentPerPage;
       }
       return this.loop ? this.pageCount - 1 : this.currentPage;
     },
